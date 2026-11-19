@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Games</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+  <main class="frame">
+    <img class="frame-bg" src="assets/home_box.png" alt="">
+    <img class="logo" src="assets/logo.png" alt="Ecto29">
+
+    <img class="screen" id="gameImage" src="assets/homeimage1.png" alt="Game 1">
+
+    <nav class="small">
+      <a class="back" href="index.html" aria-label="Back">
+        <img src="assets/small_back_button.png" alt="Back">
+      </a>
+      <button class="prev" id="prev" type="button" aria-label="Previous">
+        <img src="assets/small_left_button.png" alt="Previous">
+      </button>
+      <a class="play" id="play" href="game1.html" aria-label="Play">
+        <img src="assets/small_play_button.png" alt="Play">
+      </a>
+      <button class="next" id="next" type="button" aria-label="Next">
+        <img src="assets/small_right_button.png" alt="Next">
+      </button>
+    </nav>
+  </main>
+
+  <script>
+	  const games = [
+	  { title: "Lord Farquaad vs. the Negativitron", image: "assets/game1_art.png", page: "game-lfvsn.html" },
+	  { title: "Mr. Lamppost's Endless Path to Glory", image: "assets/game2_art.png", page: "game-mleptg.html" },
+	  { title: "Magic Media vs. Copilot", image: "assets/game3_art.png", page: "game-mmvc.html" }
+	  ];
+
+	  const img  = document.getElementById("gameImage");
+	  const play = document.getElementById("play");
+
+	  let i = 0;
+	  try { i = parseInt(sessionStorage.getItem("gameIndex"), 10) || 0; } catch (e) {}
+	  if (i < 0 || i >= games.length) i = 0;
+
+    function show() {
+      const g = games[i];
+      img.src = g.image;
+      img.alt = g.title;
+      play.href = g.page;
+      play.setAttribute("aria-label", "Play " + g.title);
+      try { sessionStorage.setItem("gameIndex", i); } catch (e) {}
+    }
+
+    document.getElementById("prev").addEventListener("click", () => {
+      i = (i - 1 + games.length) % games.length;
+      show();
+    });
+    document.getElementById("next").addEventListener("click", () => {
+      i = (i + 1) % games.length;
+      show();
+    });
+
+    show();
+
+    games.forEach(g => { new Image().src = g.image; });
+  </script>
+
+</body>
+</html>

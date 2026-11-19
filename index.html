@@ -1,9 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ecto29</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
 <body>
 
-<h1>Ecto29</h1>
-<p>My site be not done yet</p>
+  <main class="frame">
+    <img class="frame-bg" src="assets/home_box.png" alt="">
+
+    <img class="logo" src="assets/logo.png" alt="Ecto29">
+
+    <img class="screen" id="homeImage" src="assets/homeimage1.png" alt="">
+
+    <nav>
+      <a class="about" href="about.html" aria-label="About"></a>
+      <a class="games" href="games.html" aria-label="Games"></a>
+      <a class="links" href="links.html" aria-label="Links"></a>
+    </nav>
+  </main>
+
+  <script>
+    const images = ["assets/homeimage1.png", "assets/homeimage2.png", "assets/homeimage3.png"];
+
+    let last = null;
+    try { last = sessionStorage.getItem("lastHomeImage"); } catch (e) {}
+
+    let choices = images.filter(img => img !== last);
+    if (choices.length === 0) choices = images;
+
+    const pick = choices[Math.floor(Math.random() * choices.length)];
+    document.getElementById("homeImage").src = pick;
+
+    try { sessionStorage.setItem("lastHomeImage", pick); } catch (e) {}
+
+    new Image().src = "assets/placeholder_button_pressed.png";
+  </script>
 
 </body>
 </html>
